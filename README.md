@@ -2,6 +2,17 @@
 
 This project implements a comprehensive mapping robot using an ATmega32 microcontroller that creates maps using an ultrasonic sensor while autonomously navigating.
 
+## 📸 Project Gallery
+
+![Robot Circuit](public/image.png)
+*Complete circuit design showing ATmega32, sensors, and motor connections*
+
+![Hardware Setup](public/image0.png)  
+*Physical hardware assembly with all components*
+
+![Working Robot](public/image1.png)
+*Robot in action performing autonomous mapping*
+
 ## 🤖 Project Overview
 
 The robot performs the following functions:
@@ -10,6 +21,54 @@ The robot performs the following functions:
 - **Map Creation**: Creates a 2D map of the environment as it explores
 - **Obstacle Avoidance**: Implements intelligent path planning and obstacle avoidance
 - **LCD Display**: Shows current status and position information
+
+## 🧪 Testing and Simulation
+
+### Test Files Available:
+
+#### 1. **`test_program.asm`** - Hardware Verification Test
+A simplified test program to verify basic functionality:
+- **LED Pattern Test**: Alternating LED patterns to show program execution
+- **Motor Direction Test**: Tests all motor directions (forward, backward, left, right)  
+- **PWM Speed Test**: Verifies PWM generation at different duty cycles (25%, 50%, 75%, 100%)
+- **Ultrasonic Test**: Generates trigger pulses and shows visual feedback
+
+**Usage:**
+```bash
+# Compile test program
+avr-as -mmcu=atmega32 -o test_program.elf test_program.asm
+avr-objcopy -O ihex test_program.elf test_program.hex
+
+# Upload to ATmega32
+avrdude -p atmega32 -c usbasp -U flash:w:test_program.hex:i
+```
+
+**Expected Test Results:**
+- LEDs will show startup sequence (1-8 lighting up)
+- Alternating patterns (10101010, 01010101) 
+- Motor control pins showing different direction patterns
+- PWM signals visible on oscilloscope
+- Ultrasonic trigger pulses every 200ms
+
+#### 2. **`robot_simulator.html`** - Interactive Visual Simulation
+Open this HTML file in your browser to see the robot in action:
+- **Virtual Robot**: Visual representation with motors, sensor, LCD
+- **Real-time Mapping**: 8x8 grid showing explored areas and obstacles
+- **Status Display**: Position, direction, and mapping progress
+- **Interactive Controls**: Start/stop simulation, test individual components
+
+**To Run Simulator:**
+1. Open `robot_simulator.html` in any web browser
+2. Click "🚀 Start Mapping" to begin simulation
+3. Watch robot explore and create map automatically
+4. Use test buttons to verify individual components
+
+#### 3. **`proteus_simulation_guide.md`** - Professional Circuit Simulation
+Complete guide for simulating the circuit in Proteus ISIS:
+- Component placement instructions
+- Circuit connections and wiring
+- Simulation settings and parameters
+- Expected behavior and results
 
 ## 🔧 Hardware Requirements
 
@@ -254,6 +313,29 @@ The robot uses a **frontier-based exploration** algorithm:
   - Bit 1: Obstacle detected
   - Bit 2: Wall detected
   - Bit 3: Boundary marker
+
+## ⚡ Quick Start & Verification
+
+### Option 1: Quick Hardware Test (5 minutes)
+```bash
+1. Wire up basic circuit with ATmega32 + 8 LEDs on PORTA
+2. Upload test_program.hex
+3. Power on - you should see:
+   - LED startup sequence (proves program loaded)
+   - Alternating patterns (proves timers work)
+   - Various test patterns (proves all functions work)
+```
+
+### Option 2: Virtual Simulation (1 minute)  
+```bash
+1. Open robot_simulator.html in browser
+2. Click "Start Mapping" 
+3. Watch robot move and create map
+4. This proves the algorithms work correctly!
+```
+
+### Option 3: Full Circuit Build
+Follow complete hardware setup in `HARDWARE_SETUP.md`
 
 ## 🔮 Future Enhancements
 

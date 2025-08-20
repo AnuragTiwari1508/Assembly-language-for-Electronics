@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATmega32 Robot Simulator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #1a1a1a;
+            color: #ffffff;
+        }
+        
+        .simulator {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .robot {
+            width: 200px;
+            height: 150px;
+            background: #4CAF50;
+            margin: 50px auto;
+            position: relative;
+            border-radius: 10px;
+            border: 3px solid #45a049;
+        }
+        
+        .sensor {
+            width: 30px;
+            height: 15px;
+            background: #2196F3;
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+        }
+        
+        .motor {
+            width: 40px;
+            height: 40px;
+            background: #FF9800;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .motor.left {
+            left: -20px;
+        }
+        
+        .motor.right {
+            right: -20px;
+        }
+        
+        .lcd {
+            width: 120px;
+            height: 40px;
+            background: #000;
+            color: #0f0;
+            font-family: monospace;
+            font-size: 10px;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 2px solid #333;
+            padding: 5px;
+        }
+        
+        .led {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 10px;
+        }
+        
+        .led.red { background: #f44336; left: 20px; }
+        .led.green { background: #4CAF50; left: 40px; }
+        .led.blue { background: #2196F3; left: 60px; }
+        
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        button:hover {
+            background: #45a049;
+        }
+        
+        .status {
+            background: #333;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(8, 30px);
+            gap: 2px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .cell {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #555;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .cell.visited { background: #4CAF50; }
+        .cell.obstacle { background: #f44336; }
+        .cell.robot { background: #FF9800; }
+    </style>
+</head>
+<body>
+    <h1>🤖 ATmega32 Ultrasonic Mapping Robot Simulator</h1>
+    
+    <div class="simulator">
+        <h2>Virtual Robot</h2>
+        <div class="robot" id="robot">
+            <div class="sensor" id="sensor"></div>
+            <div class="motor left" id="leftMotor"></div>
+            <div class="motor right" id="rightMotor"></div>
+            <div class="lcd" id="lcd">Mapping Robot<br>X:4 Y:4 D:N</div>
+            <div class="led red" id="redLed"></div>
+            <div class="led green" id="greenLed"></div>
+            <div class="led blue" id="blueLed"></div>
+        </div>
+        
+        <div class="controls">
+            <button onclick="startSimulation()">🚀 Start Mapping</button>
+            <button onclick="stopSimulation()">⏹️ Stop</button>
+            <button onclick="resetSimulation()">🔄 Reset</button>
+            <button onclick="testMotors()">🔧 Test Motors</button>
+            <button onclick="testSensor()">📡 Test Sensor</button>
+        </div>
+        
+        <div class="status" id="status">
+            Status: Ready to start simulation<br>
+            Distance: -- cm<br>
+            Position: (4, 4)<br>
+            Direction: North<br>
+            Mapped Cells: 0/64
+        </div>
+        
+        <h3>🗺️ Map Grid (8x8)</h3>
+        <div class="grid" id="mapGrid"></div>
+    </div>
+
+    <script>
+        // Simulation variables
+        let robotX = 4, robotY = 4, robotDir = 0; // 0=N, 1=E, 2=S, 3=W
+        let isRunning = false;
+        let mapData = Array(64).fill(0);
+        let simulationInterval;
+        
+        // Initialize map grid
+        function initializeGrid() {
+            const grid = document.getElementById('mapGrid');
+            grid.innerHTML = '';
+            
+            for (let i = 0; i < 64; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.id = `cell${i}`;
+                grid.appendChild(cell);
+            }
+            
+            updateRobotPosition();
+        }
+        
+        // Update robot position on grid
+        function updateRobotPosition() {
+            // Clear previous robot position
+            document.querySelectorAll('.cell').forEach(cell => {
+                cell.classList.remove('robot');
+            });
+            
+            // Set current robot position
+            const index = robotY * 8 + robotX;
+            document.getElementById(`cell${index}`).classList.add('robot');
+            
+            // Mark as visited
+            mapData[index] |= 1;
+            document.getElementById(`cell${index}`).classList.add('visited');
+            
+            // Update LCD display
+            const directions = ['N', 'E', 'S', 'W'];
+            document.getElementById('lcd').innerHTML = 
+                `Mapping Robot<br>X:${robotX} Y:${robotY} D:${directions[robotDir]}`;
+            
+            // Update status
+            const visitedCount = mapData.filter(cell => cell & 1).length;
+            document.getElementById('status').innerHTML = 
+                `Status: ${isRunning ? 'Mapping...' : 'Stopped'}<br>
+                Distance: ${Math.floor(Math.random() * 50 + 10)} cm<br>
+                Position: (${robotX}, ${robotY})<br>
+                Direction: ${directions[robotDir]}<br>
+                Mapped Cells: ${visitedCount}/64`;
+        }
+        
+        // Simulate sensor reading
+        function simulateSensor() {
+            const sensor = document.getElementById('sensor');
+            sensor.style.background = '#FF5722';
+            
+            setTimeout(() => {
+                sensor.style.background = '#2196F3';
+                
+                // Simulate obstacle detection (random)
+                if (Math.random() < 0.2) {
+                    // Add obstacle in front of robot
+                    let frontX = robotX, frontY = robotY;
+                    switch(robotDir) {
+                        case 0: frontY--; break; // North
+                        case 1: frontX++; break; // East  
+                        case 2: frontY++; break; // South
+                        case 3: frontX--; break; // West
+                    }
+                    
+                    if (frontX >= 0 && frontX < 8 && frontY >= 0 && frontY < 8) {
+                        const index = frontY * 8 + frontX;
+                        mapData[index] |= 2; // Mark obstacle
+                        document.getElementById(`cell${index}`).classList.add('obstacle');
+                    }
+                }
+            }, 100);
+        }
+        
+        // Simulate motor movement
+        function simulateMovement() {
+            const leftMotor = document.getElementById('leftMotor');
+            const rightMotor = document.getElementById('rightMotor');
+            
+            // Visual motor rotation
+            leftMotor.style.transform = 'translateY(-50%) rotate(360deg)';
+            rightMotor.style.transform = 'translateY(-50%) rotate(360deg)';
+            
+            setTimeout(() => {
+                leftMotor.style.transform = 'translateY(-50%)';
+                rightMotor.style.transform = 'translateY(-50%)';
+            }, 500);
+            
+            // Move robot based on direction
+            let newX = robotX, newY = robotY;
+            switch(robotDir) {
+                case 0: newY = Math.max(0, robotY - 1); break; // North
+                case 1: newX = Math.min(7, robotX + 1); break; // East
+                case 2: newY = Math.min(7, robotY + 1); break; // South  
+                case 3: newX = Math.max(0, robotX - 1); break; // West
+            }
+            
+            robotX = newX;
+            robotY = newY;
+            updateRobotPosition();
+        }
+        
+        // Main simulation loop
+        function simulationStep() {
+            if (!isRunning) return;
+            
+            // Blink LEDs to show activity
+            const leds = ['redLed', 'greenLed', 'blueLed'];
+            leds.forEach(led => {
+                document.getElementById(led).style.opacity = Math.random() > 0.5 ? '1' : '0.3';
+            });
+            
+            // Simulate sensor scan
+            simulateSensor();
+            
+            // Random movement decision (simplified mapping algorithm)
+            setTimeout(() => {
+                if (Math.random() < 0.3) {
+                    // Turn (change direction)
+                    robotDir = (robotDir + 1) % 4;
+                } else {
+                    // Move forward
+                    simulateMovement();
+                }
+                updateRobotPosition();
+            }, 200);
+        }
+        
+        // Control functions
+        function startSimulation() {
+            isRunning = true;
+            simulationInterval = setInterval(simulationStep, 1000);
+            updateRobotPosition();
+        }
+        
+        function stopSimulation() {
+            isRunning = false;
+            clearInterval(simulationInterval);
+            updateRobotPosition();
+        }
+        
+        function resetSimulation() {
+            stopSimulation();
+            robotX = 4;
+            robotY = 4;
+            robotDir = 0;
+            mapData = Array(64).fill(0);
+            
+            document.querySelectorAll('.cell').forEach(cell => {
+                cell.classList.remove('visited', 'obstacle', 'robot');
+            });
+            
+            initializeGrid();
+        }
+        
+        function testMotors() {
+            const leftMotor = document.getElementById('leftMotor');
+            const rightMotor = document.getElementById('rightMotor');
+            
+            leftMotor.style.background = '#FF5722';
+            rightMotor.style.background = '#FF5722';
+            
+            setTimeout(() => {
+                leftMotor.style.background = '#FF9800';
+                rightMotor.style.background = '#FF9800';
+            }, 1000);
+        }
+        
+        function testSensor() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    simulateSensor();
+                }, i * 200);
+            }
+        }
+        
+        // Initialize when page loads
+        window.onload = function() {
+            initializeGrid();
+        };
+    </script>
+</body>
+</html>
