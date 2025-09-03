@@ -1,78 +1,73 @@
-;-----------------------------------------------------------------------------
-; AVR Assembly Program to toggle all pins of Port C
+;===============================================================================
+; AVR Assembly Program to Toggle All Pins of Port C - GCC AVR Version
 ; Target Microcontroller: ATmega32
 ; Clock Frequency: 8MHz
-;-----------------------------------------------------------------------------
+; Created: September 3, 2025
+;===============================================================================
 
-.include "m32def.inc" ; Include register definitions for the ATmega32
+#include <avr/io.h>
 
-;-----------------------------------------------------------------------------
-; Delay Subroutine (~10ms at 8MHz)
-; Uses two nested loops to create the delay.
-;-----------------------------------------------------------------------------
-.equ DELAY_OUTER = 120    ; Outer loop count
-.equ DELAY_INNER = 166    ; Inner loop count
+.section .text
+.global main
 
-DELAY_10MS:
-    ; Use r16 and r17 as loop counters
-    push r16
-    push r17
+; Constants for delay calculation
+#define DELAY_OUTER 120    ; Outer loop count (~10ms at 8MHz)
+#define DELAY_INNER 166    ; Inner loop count
 
-    ldi r16, DELAY_OUTER
-OUTER_LOOP:
-    ldi r17, DELAY_INNER
-INNER_LOOP:
-    ; Each instruction takes 1 clock cycle (approximately)
-    ; This creates a very precise delay
-    dec r17
-    brne INNER_LOOP
-    dec r16
-    brne OUTER_LOOP
-    
-    ; Restore registers and return
-    pop r17
-    pop r16
-    ret
-
-;-----------------------------------------------------------------------------
-; Main Program
-;-----------------------------------------------------------------------------
+; Reset vector
 .org 0x0000
-    rjmp START ; Jump to the main program entry point
+    rjmp main           ; Jump to main program
 
-; The following directive is crucial to avoid memory conflicts.
-; It places the main code section at a new origin (address 0x0020),
-; leaving space for the interrupt vector table.
+; Main program starts at 0x0020 to avoid interrupt vector conflicts
 .org 0x0020
-START:
+main:
     ; Initialize Stack Pointer
-    ; The stack must be set up for the 'ret' instruction in subroutines to work
-    ldi r16, high(RAMEND)
-    out SPH, r16
-    ldi r16, low(RAMEND)
-    out SPL, r16
+    ldi r16, hi8(RAMEND)
+    sts SPH, r16
+    ldi r16, lo8(RAMEND)
+    sts SPL, r16
 
-    ; Set all pins of Port C as outputs
-    ; This is the equivalent of DDRC = 0xFF;
-    ldi r16, 0xFF
-    out DDRC, r16
+    ; Configure PORTC as output (all pins)
+    ldi r16, 0xFF       ; Set all pins as output
+    sts DDRC, r16
+    
+    ; Initialize PORTC to OFF state
+    ldi r16, 0x00
+    sts PORTC, r16
 
-MAIN_LOOP:
-    ; Toggle Port C with a pattern (10101010)
-    ; This is the equivalent of PORTC = 0xAA;
+main_loop:
+    ; Pattern 1: Alternate pins HIGH (10101010)
     ldi r16, 0xAA
-    out PORTC, r16
+    sts PORTC, r16
+    rcall delay_10ms    ; 10ms delay
 
-    ; Call the 10ms delay subroutine
-    rcall DELAY_10MS
-
-    ; Toggle Port C with the inverse pattern (01010101)
-    ; This is the equivalent of PORTC = 0x55;
+    ; Pattern 2: Alternate pins LOW (01010101)
     ldi r16, 0x55
-    out PORTC, r16
+    sts PORTC, r16
+    rcall delay_10ms    ; 10ms delay
 
-    ; Call the 10ms delay subroutine
-    rcall DELAY_10MS
+    ; Repeat the pattern
+    rjmp main_loop
 
-    ; Jump back to the beginning of the main loop to repeat
-    rjmp MAIN_LOOP
+;===============================================================================
+; Delay Subroutine - Approximately 10ms at 8MHz
+; Uses nested loops for precise timing
+;===============================================================================
+delay_10ms:
+    push r17            ; Save registers
+    push r18
+
+    ldi r17, DELAY_OUTER
+outer_loop:
+    ldi r18, DELAY_INNER
+inner_loop:
+    ; Each iteration takes ~4 clock cycles
+    dec r18
+    brne inner_loop     ; Branch if not equal to zero
+    
+    dec r17
+    brne outer_loop     ; Branch if not equal to zero
+
+    pop r18             ; Restore registers
+    pop r17
+    ret                 ; Return to caller
