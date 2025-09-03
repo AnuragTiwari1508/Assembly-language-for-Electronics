@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<PROTEUS_PROJECT VERSION="8.13" KEYWORD="PROJECT">
+ <DESIGN_DATA>
+  <SCHEMATIC_DATA>
+   <PROPERTIES>
+    <PROPERTY NAME="TITLE" VALUE="Assignment 5 - LCD Display System"/>
+    <PROPERTY NAME="AUTHOR" VALUE="Assembly Language Course"/>
+    <PROPERTY NAME="COMPANY" VALUE="Electronics Learning"/>
+    <PROPERTY NAME="REVISION" VALUE="1.0"/>
+    <PROPERTY NAME="DATE" VALUE="September 2025"/>
+    <PROPERTY NAME="SHEET_COUNT" VALUE="1"/>
+    <PROPERTY NAME="SHEET_SIZE" VALUE="A4"/>
+    <PROPERTY NAME="ORIENTATION" VALUE="LANDSCAPE"/>
+   </PROPERTIES>
+   <LIBRARIES>
+    <LIBRARY NAME="MICROCONTROLLERS.LIB"/>
+    <LIBRARY NAME="DEVICES.LIB"/>
+    <LIBRARY NAME="DISPLAY.LIB"/>
+   </LIBRARIES>
+   <COMPONENTS>
+    <COMPONENT NAME="U1" REFDES="U1" PART="ATMEGA32-P" VALUE="" XPOS="300" YPOS="300" ROTATION="0">
+     <PROPERTIES>
+      <PROPERTY NAME="PROGRAM" VALUE="assignment5.hex"/>
+      <PROPERTY NAME="CLOCK" VALUE="8000000"/>
+      <PROPERTY NAME="CKOPT" VALUE="1"/>
+     </PROPERTIES>
+    </COMPONENT>
+    <COMPONENT NAME="LCD1" REFDES="LCD1" PART="LM016L" VALUE="" XPOS="600" YPOS="200" ROTATION="0">
+     <PROPERTIES>
+      <PROPERTY NAME="MODDLL" VALUE="LCD"/>
+     </PROPERTIES>
+    </COMPONENT>
+    <COMPONENT NAME="VR1" REFDES="VR1" PART="POT-HG" VALUE="10K" XPOS="700" YPOS="180" ROTATION="90">
+     <PROPERTIES>
+      <PROPERTY NAME="DESCRIPTION" VALUE="Contrast Control"/>
+     </PROPERTIES>
+    </COMPONENT>
+    <COMPONENT NAME="SW1" REFDES="SW1" PART="BUTTON" VALUE="" XPOS="150" YPOS="200" ROTATION="0"/>
+    <COMPONENT NAME="SW2" REFDES="SW2" PART="BUTTON" VALUE="" XPOS="150" YPOS="240" ROTATION="0"/>
+    <COMPONENT NAME="R1" REFDES="R1" PART="RES" VALUE="10K" XPOS="200" YPOS="180" ROTATION="90"/>
+    <COMPONENT NAME="R2" REFDES="R2" PART="RES" VALUE="10K" XPOS="200" YPOS="220" ROTATION="90"/>
+    <COMPONENT NAME="X1" REFDES="X1" PART="CRYSTAL" VALUE="8MHz" XPOS="220" YPOS="380" ROTATION="90"/>
+    <COMPONENT NAME="C1" REFDES="C1" PART="CAP" VALUE="22pF" XPOS="200" YPOS="400" ROTATION="0"/>
+    <COMPONENT NAME="C2" REFDES="C2" PART="CAP" VALUE="22pF" XPOS="240" YPOS="400" ROTATION="0"/>
+    <COMPONENT NAME="VCC" REFDES="VCC" PART="POWER" VALUE="+5V" XPOS="100" YPOS="50" ROTATION="0"/>
+    <COMPONENT NAME="GND" REFDES="GND" PART="GROUND" VALUE="" XPOS="100" YPOS="500" ROTATION="0"/>
+   </COMPONENTS>
+   <WIRES>
+    <WIRE>
+     <VERTEX X="320" Y="300"/>
+     <VERTEX X="580" Y="180"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="321" Y="300"/>
+     <VERTEX X="580" Y="200"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="322" Y="300"/>
+     <VERTEX X="580" Y="220"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="323" Y="300"/>
+     <VERTEX X="580" Y="240"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="324" Y="300"/>
+     <VERTEX X="580" Y="160"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="325" Y="300"/>
+     <VERTEX X="580" Y="140"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="620" Y="100"/>
+     <VERTEX X="100" Y="50"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="620" Y="120"/>
+     <VERTEX X="100" Y="500"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="620" Y="260"/>
+     <VERTEX X="700" Y="160"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="700" Y="200"/>
+     <VERTEX X="100" Y="50"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="700" Y="200"/>
+     <VERTEX X="100" Y="500"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="307" Y="200"/>
+     <VERTEX X="170" Y="200"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="130" Y="200"/>
+     <VERTEX X="100" Y="500"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="200" Y="160"/>
+     <VERTEX X="100" Y="50"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="200" Y="200"/>
+     <VERTEX X="170" Y="200"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="308" Y="240"/>
+     <VERTEX X="170" Y="240"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="130" Y="240"/>
+     <VERTEX X="100" Y="500"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="200" Y="200"/>
+     <VERTEX X="100" Y="50"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="200" Y="240"/>
+     <VERTEX X="170" Y="240"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="313" Y="380"/>
+     <VERTEX X="220" Y="380"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="312" Y="380"/>
+     <VERTEX X="240" Y="380"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="220" Y="380"/>
+     <VERTEX X="200" Y="400"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="200" Y="420"/>
+     <VERTEX X="100" Y="500"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="240" Y="380"/>
+     <VERTEX X="240" Y="400"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="240" Y="420"/>
+     <VERTEX X="100" Y="500"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="311" Y="300"/>
+     <VERTEX X="100" Y="50"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="332" Y="300"/>
+     <VERTEX X="100" Y="500"/>
+    </WIRE>
+   </WIRES>
+  </SCHEMATIC_DATA>
+ </DESIGN_DATA>
+</PROTEUS_PROJECT>

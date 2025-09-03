@@ -1,0 +1,265 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<PROTEUS_PROJECT VERSION="8.13" KEYWORD="PROJECT">
+ <DESIGN_DATA>
+  <SCHEMATIC_DATA>
+   <PROPERTIES>
+    <PROPERTY NAME="TITLE" VALUE="Assignment 10 - Data Logger with EEPROM"/>
+    <PROPERTY NAME="AUTHOR" VALUE="Assembly Language Course"/>
+    <PROPERTY NAME="COMPANY" VALUE="Electronics Learning"/>
+    <PROPERTY NAME="REVISION" VALUE="1.0"/>
+    <PROPERTY NAME="DATE" VALUE="September 2025"/>
+    <PROPERTY NAME="SHEET_COUNT" VALUE="1"/>
+    <PROPERTY NAME="SHEET_SIZE" VALUE="A4"/>
+    <PROPERTY NAME="ORIENTATION" VALUE="LANDSCAPE"/>
+   </PROPERTIES>
+   <LIBRARIES>
+    <LIBRARY NAME="MICROCONTROLLERS.LIB"/>
+    <LIBRARY NAME="DEVICES.LIB"/>
+    <LIBRARY NAME="DISPLAY.LIB"/>
+    <LIBRARY NAME="MEMORY.LIB"/>
+   </LIBRARIES>
+   <COMPONENTS>
+    <COMPONENT NAME="U1" REFDES="U1" PART="ATMEGA32-P" VALUE="" XPOS="400" YPOS="300" ROTATION="0">
+     <PROPERTIES>
+      <PROPERTY NAME="PROGRAM" VALUE="assignment10.hex"/>
+      <PROPERTY NAME="CLOCK" VALUE="8000000"/>
+      <PROPERTY NAME="CKOPT" VALUE="1"/>
+     </PROPERTIES>
+    </COMPONENT>
+    <COMPONENT NAME="U2" REFDES="U2" PART="24C64" VALUE="" XPOS="200" YPOS="150" ROTATION="0">
+     <PROPERTIES>
+      <PROPERTY NAME="DESCRIPTION" VALUE="External EEPROM"/>
+     </PROPERTIES>
+    </COMPONENT>
+    <COMPONENT NAME="U3" REFDES="U3" PART="LM35" VALUE="" XPOS="150" YPOS="300" ROTATION="0"/>
+    <COMPONENT NAME="LCD1" REFDES="LCD1" PART="LM016L" VALUE="" XPOS="650" YPOS="200" ROTATION="0"/>
+    <COMPONENT NAME="VR1" REFDES="VR1" PART="POT-HG" VALUE="10K" XPOS="750" YPOS="180" ROTATION="90"/>
+    <COMPONENT NAME="R1" REFDES="R1" PART="RES" VALUE="4.7K" XPOS="250" YPOS="120" ROTATION="90">
+     <PROPERTIES>
+      <PROPERTY NAME="DESCRIPTION" VALUE="I2C Pull-up SDA"/>
+     </PROPERTIES>
+    </COMPONENT>
+    <COMPONENT NAME="R2" REFDES="R2" PART="RES" VALUE="4.7K" XPOS="270" YPOS="120" ROTATION="90">
+     <PROPERTIES>
+      <PROPERTY NAME="DESCRIPTION" VALUE="I2C Pull-up SCL"/>
+     </PROPERTIES>
+    </COMPONENT>
+    <COMPONENT NAME="C3" REFDES="C3" PART="CAP" VALUE="100nF" XPOS="120" YPOS="320" ROTATION="0"/>
+    <COMPONENT NAME="R3" REFDES="R3" PART="RES" VALUE="1K" XPOS="200" YPOS="300" ROTATION="0"/>
+    <COMPONENT NAME="SW1" REFDES="SW1" PART="BUTTON" VALUE="" XPOS="650" YPOS="100" ROTATION="0">
+     <PROPERTIES>
+      <PROPERTY NAME="DESCRIPTION" VALUE="Log Data"/>
+     </PROPERTIES>
+    </COMPONENT>
+    <COMPONENT NAME="SW2" REFDES="SW2" PART="BUTTON" VALUE="" XPOS="650" YPOS="120" ROTATION="0">
+     <PROPERTIES>
+      <PROPERTY NAME="DESCRIPTION" VALUE="View Data"/>
+     </PROPERTIES>
+    </COMPONENT>
+    <COMPONENT NAME="R4" REFDES="R4" PART="RES" VALUE="10K" XPOS="700" YPOS="80" ROTATION="90"/>
+    <COMPONENT NAME="R5" REFDES="R5" PART="RES" VALUE="10K" XPOS="700" YPOS="100" ROTATION="90"/>
+    <COMPONENT NAME="D1" REFDES="D1" PART="LED-GREEN" VALUE="" XPOS="600" YPOS="100" ROTATION="0">
+     <PROPERTIES>
+      <PROPERTY NAME="DESCRIPTION" VALUE="Data Logging"/>
+     </PROPERTIES>
+    </COMPONENT>
+    <COMPONENT NAME="R6" REFDES="R6" PART="RES" VALUE="220R" XPOS="550" YPOS="100" ROTATION="0"/>
+    <COMPONENT NAME="X1" REFDES="X1" PART="CRYSTAL" VALUE="8MHz" XPOS="320" YPOS="380" ROTATION="90"/>
+    <COMPONENT NAME="C1" REFDES="C1" PART="CAP" VALUE="22pF" XPOS="300" YPOS="400" ROTATION="0"/>
+    <COMPONENT NAME="C2" REFDES="C2" PART="CAP" VALUE="22pF" XPOS="340" YPOS="400" ROTATION="0"/>
+    <COMPONENT NAME="VCC" REFDES="VCC" PART="POWER" VALUE="+5V" XPOS="50" YPOS="50" ROTATION="0"/>
+    <COMPONENT NAME="GND" REFDES="GND" PART="GROUND" VALUE="" XPOS="50" YPOS="500" ROTATION="0"/>
+   </COMPONENTS>
+   <WIRES>
+    <WIRE>
+     <VERTEX X="420" Y="180"/>
+     <VERTEX X="250" Y="140"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="421" Y="200"/>
+     <VERTEX X="270" Y="140"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="180" Y="140"/>
+     <VERTEX X="250" Y="140"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="181" Y="160"/>
+     <VERTEX X="270" Y="140"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="250" Y="100"/>
+     <VERTEX X="50" Y="50"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="270" Y="100"/>
+     <VERTEX X="50" Y="50"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="220" Y="130"/>
+     <VERTEX X="50" Y="50"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="220" Y="170"/>
+     <VERTEX X="50" Y="500"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="220" Y="150"/>
+     <VERTEX X="50" Y="50"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="220" Y="150"/>
+     <VERTEX X="50" Y="500"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="220" Y="150"/>
+     <VERTEX X="50" Y="500"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="170" Y="290"/>
+     <VERTEX X="50" Y="50"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="170" Y="310"/>
+     <VERTEX X="50" Y="500"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="170" Y="300"/>
+     <VERTEX X="100" Y="320"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="140" Y="320"/>
+     <VERTEX X="180" Y="300"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="220" Y="300"/>
+     <VERTEX X="400" Y="300"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="120" Y="300"/>
+     <VERTEX X="50" Y="500"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="420" Y="300"/>
+     <VERTEX X="630" Y="180"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="421" Y="300"/>
+     <VERTEX X="630" Y="200"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="422" Y="300"/>
+     <VERTEX X="630" Y="220"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="423" Y="300"/>
+     <VERTEX X="630" Y="240"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="424" Y="300"/>
+     <VERTEX X="630" Y="160"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="425" Y="300"/>
+     <VERTEX X="630" Y="140"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="670" Y="100"/>
+     <VERTEX X="50" Y="50"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="670" Y="120"/>
+     <VERTEX X="50" Y="500"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="670" Y="260"/>
+     <VERTEX X="750" Y="160"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="750" Y="200"/>
+     <VERTEX X="50" Y="50"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="750" Y="200"/>
+     <VERTEX X="50" Y="500"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="428" Y="100"/>
+     <VERTEX X="670" Y="100"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="630" Y="100"/>
+     <VERTEX X="50" Y="500"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="700" Y="60"/>
+     <VERTEX X="50" Y="50"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="700" Y="100"/>
+     <VERTEX X="670" Y="100"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="429" Y="120"/>
+     <VERTEX X="670" Y="120"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="630" Y="120"/>
+     <VERTEX X="50" Y="500"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="700" Y="80"/>
+     <VERTEX X="50" Y="50"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="700" Y="120"/>
+     <VERTEX X="670" Y="120"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="426" Y="140"/>
+     <VERTEX X="530" Y="100"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="570" Y="100"/>
+     <VERTEX X="580" Y="100"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="620" Y="100"/>
+     <VERTEX X="50" Y="500"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="413" Y="380"/>
+     <VERTEX X="320" Y="380"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="412" Y="380"/>
+     <VERTEX X="340" Y="380"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="320" Y="380"/>
+     <VERTEX X="300" Y="400"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="300" Y="420"/>
+     <VERTEX X="50" Y="500"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="340" Y="380"/>
+     <VERTEX X="340" Y="400"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="340" Y="420"/>
+     <VERTEX X="50" Y="500"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="411" Y="300"/>
+     <VERTEX X="50" Y="50"/>
+    </WIRE>
+    <WIRE>
+     <VERTEX X="432" Y="300"/>
+     <VERTEX X="50" Y="500"/>
+    </WIRE>
+   </WIRES>
+  </SCHEMATIC_DATA>
+ </DESIGN_DATA>
+</PROTEUS_PROJECT>

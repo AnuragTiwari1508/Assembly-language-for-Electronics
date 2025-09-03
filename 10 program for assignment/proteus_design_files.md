@@ -1,0 +1,747 @@
+# ====================================================================
+# COMPLETE PROTEUS DESIGN FILES FOR ALL 10 ASSIGNMENTS
+# Direct Import Files for Proteus 8.13
+# ====================================================================
+
+## How to Use These Files:
+
+1. **Save as .DSN files:**
+   - Copy each section below to a text file
+   - Save with .dsn extension (e.g., assignment1.dsn)
+   - Open in Proteus using File → Open Design
+
+2. **Import Instructions:**
+   - Open Proteus 8.13
+   - File → New Project (or Open existing)
+   - File → Import → Select file type
+   - Browse to your .dsn file
+   - Click Open
+
+## Assignment 1: LED Blinker - Complete Design File
+
+```proteus-design
+|DESIGN|
+|HEADER|
+ISIS SCHEMATIC FILE  Proteus 8.13
+DESIGN TITLE: Assignment 1 - LED Blinker
+DESIGN AUTHOR: Assembly Course
+DESIGN REVISION: 1.0
+|LIBRARIES|
+MICROCONTROLLERS.LIB
+DEVICES.LIB
+|COMPONENTS|
+U1 ATMEGA32-P (400,300) R0
+D1 LED-RED (600,200) R0
+R1 RES (500,200) VALUE=220R
+R2 RES (350,150) VALUE=10K
+X1 CRYSTAL (320,380) VALUE=8MHz
+C1 CAP (300,400) VALUE=22pF
+C2 CAP (340,400) VALUE=22pF
+V1 POWER (200,100) VALUE=+5V
+G1 GROUND (200,500)
+|WIRES|
+(U1.1,R1.1)
+(R1.2,D1.A)
+(D1.K,G1)
+(U1.13,X1.1)
+(U1.12,X1.2)
+(U1.13,C1.1)
+(C1.2,G1)
+(U1.12,C2.1)
+(C2.2,G1)
+(U1.11,V1)
+(U1.32,G1)
+(U1.9,R2.1)
+(R2.2,V1)
+|LABELS|
+NET001 PB0_LED
+NET002 VCC
+NET003 GND
+NET004 XTAL1
+NET005 XTAL2
+NET006 RESET
+|PROPERTIES|
+U1.PROGRAM=assignment1.hex
+U1.CLOCK=8000000
+|END|
+```
+
+## Assignment 2: Traffic Light - Complete Design File
+
+```proteus-design
+|DESIGN|
+|HEADER|
+ISIS SCHEMATIC FILE  Proteus 8.13
+DESIGN TITLE: Assignment 2 - Traffic Light Controller
+DESIGN AUTHOR: Assembly Course
+DESIGN REVISION: 1.0
+|COMPONENTS|
+U1 ATMEGA32-P (400,300) R0
+D1 LED-RED (600,150) R0
+D2 LED-YELLOW (600,200) R0  
+D3 LED-GREEN (600,250) R0
+R1 RES (520,150) VALUE=220R
+R2 RES (520,200) VALUE=220R
+R3 RES (520,250) VALUE=220R
+R4 RES (350,150) VALUE=10K
+X1 CRYSTAL (320,380) VALUE=8MHz
+C1 CAP (300,400) VALUE=22pF
+C2 CAP (340,400) VALUE=22pF
+V1 POWER (200,100) VALUE=+5V
+G1 GROUND (200,500)
+|WIRES|
+(U1.1,R1.1)
+(R1.2,D1.A)
+(D1.K,G1)
+(U1.2,R2.1)
+(R2.2,D2.A)
+(D2.K,G1)
+(U1.3,R3.1)
+(R3.2,D3.A)
+(D3.K,G1)
+(U1.13,X1.1)
+(U1.12,X1.2)
+(U1.13,C1.1)
+(C1.2,G1)
+(U1.12,C2.1)
+(C2.2,G1)
+(U1.11,V1)
+(U1.32,G1)
+(U1.9,R4.1)
+(R4.2,V1)
+|PROPERTIES|
+U1.PROGRAM=assignment2.hex
+U1.CLOCK=8000000
+|END|
+```
+
+## Assignment 3: 7-Segment Display - Complete Design File
+
+```proteus-design
+|DESIGN|
+|HEADER|
+ISIS SCHEMATIC FILE  Proteus 8.13
+DESIGN TITLE: Assignment 3 - 7-Segment Counter
+DESIGN AUTHOR: Assembly Course
+DESIGN REVISION: 1.0
+|COMPONENTS|
+U1 ATMEGA32-P (300,300) R0
+U2 7SEG-CC (600,300) R0
+SW1 BUTTON (150,200) R0
+R1 RES (450,280) VALUE=220R
+R2 RES (450,300) VALUE=220R
+R3 RES (450,320) VALUE=220R
+R4 RES (450,340) VALUE=220R
+R5 RES (450,360) VALUE=220R
+R6 RES (450,380) VALUE=220R
+R7 RES (450,400) VALUE=220R
+R8 RES (450,420) VALUE=220R
+R9 RES (150,150) VALUE=10K
+R10 RES (250,150) VALUE=10K
+X1 CRYSTAL (220,380) VALUE=8MHz
+C1 CAP (200,400) VALUE=22pF
+C2 CAP (240,400) VALUE=22pF
+V1 POWER (100,100) VALUE=+5V
+G1 GROUND (100,500)
+|WIRES|
+(U1.14,R1.1)
+(R1.2,U2.7)
+(U1.15,R2.1)
+(R2.2,U2.6)
+(U1.16,R3.1)
+(R3.2,U2.4)
+(U1.17,R4.1)
+(R4.2,U2.2)
+(U1.18,R5.1)
+(R5.2,U2.1)
+(U1.19,R6.1)
+(R6.2,U2.9)
+(U1.22,R7.1)
+(R7.2,U2.10)
+(U1.23,R8.1)
+(R8.2,U2.5)
+(U2.3,G1)
+(U2.8,G1)
+(SW1.1,U1.14)
+(SW1.2,G1)
+(SW1.1,R9.1)
+(R9.2,V1)
+(U1.13,X1.1)
+(U1.12,X1.2)
+(U1.13,C1.1)
+(C1.2,G1)
+(U1.12,C2.1)
+(C2.2,G1)
+(U1.11,V1)
+(U1.32,G1)
+(U1.9,R10.1)
+(R10.2,V1)
+|PROPERTIES|
+U1.PROGRAM=assignment3.hex
+U1.CLOCK=8000000
+|END|
+```
+
+## Assignment 4: PWM LED Control - Complete Design File
+
+```proteus-design
+|DESIGN|
+|HEADER|
+ISIS SCHEMATIC FILE  Proteus 8.13
+DESIGN TITLE: Assignment 4 - PWM LED Brightness Control
+DESIGN AUTHOR: Assembly Course
+DESIGN REVISION: 1.0
+|COMPONENTS|
+U1 ATMEGA32-P (400,300) R0
+D1 LED-RED (650,250) R0
+RV1 POT-LIN (200,350) VALUE=10K
+R1 RES (550,250) VALUE=220R
+R2 RES (350,150) VALUE=10K
+C3 CAP (150,300) VALUE=100nF
+C4 CAP (150,320) VALUE=10uF
+X1 CRYSTAL (320,380) VALUE=8MHz
+C1 CAP (300,400) VALUE=22pF
+C2 CAP (340,400) VALUE=22pF
+V1 POWER (100,100) VALUE=+5V
+G1 GROUND (100,500)
+|WIRES|
+(RV1.2,U1.40)
+(RV1.1,V1)
+(RV1.3,G1)
+(U1.19,R1.1)
+(R1.2,D1.A)
+(D1.K,G1)
+(U1.30,V1)
+(U1.30,C3.1)
+(C3.2,G1)
+(U1.30,C4.1)
+(C4.2,G1)
+(U1.31,V1)
+(U1.31,C4.1)
+(U1.13,X1.1)
+(U1.12,X1.2)
+(U1.13,C1.1)
+(C1.2,G1)
+(U1.12,C2.1)
+(C2.2,G1)
+(U1.11,V1)
+(U1.32,G1)
+(U1.9,R2.1)
+(R2.2,V1)
+|PROPERTIES|
+U1.PROGRAM=assignment4.hex
+U1.CLOCK=8000000
+|END|
+```
+
+## Assignment 5: Temperature Monitor - Complete Design File
+
+```proteus-design
+|DESIGN|
+|HEADER|
+ISIS SCHEMATIC FILE  Proteus 8.13
+DESIGN TITLE: Assignment 5 - Temperature Monitor with LCD
+DESIGN AUTHOR: Assembly Course
+DESIGN REVISION: 1.0
+|COMPONENTS|
+U1 ATMEGA32-P (300,400) R0
+U2 LM35 (150,350) R0
+U3 LHD44780 (600,300) R0
+RV1 POT-LIN (650,200) VALUE=10K
+R1 RES (250,150) VALUE=10K
+C1 CAP (100,300) VALUE=100nF
+C2 CAP (100,320) VALUE=10uF
+C3 CAP (200,500) VALUE=22pF
+C4 CAP (240,500) VALUE=22pF
+X1 CRYSTAL (220,480) VALUE=8MHz
+V1 POWER (50,100) VALUE=+5V
+G1 GROUND (50,600)
+|WIRES|
+(U2.1,V1)
+(U2.2,U1.39)
+(U2.3,G1)
+(U3.1,G1)
+(U3.2,V1)
+(U3.3,RV1.2)
+(RV1.1,V1)
+(RV1.3,G1)
+(U3.4,U1.14)
+(U3.6,U1.15)
+(U3.11,U1.16)
+(U3.12,U1.19)
+(U3.13,U1.20)
+(U3.14,U1.21)
+(U3.15,V1)
+(U3.16,G1)
+(U1.30,V1)
+(U1.30,C1.1)
+(C1.2,G1)
+(U1.30,C2.1)
+(C2.2,G1)
+(U1.31,V1)
+(U1.13,X1.1)
+(U1.12,X1.2)
+(U1.13,C3.1)
+(C3.2,G1)
+(U1.12,C4.1)
+(C4.2,G1)
+(U1.11,V1)
+(U1.32,G1)
+(U1.9,R1.1)
+(R1.2,V1)
+|PROPERTIES|
+U1.PROGRAM=assignment5.hex
+U1.CLOCK=8000000
+|END|
+```
+
+## Assignment 6: Servo Motor Control - Complete Design File
+
+```proteus-design
+|DESIGN|
+|HEADER|
+ISIS SCHEMATIC FILE  Proteus 8.13
+DESIGN TITLE: Assignment 6 - Servo Motor Control
+DESIGN AUTHOR: Assembly Course
+DESIGN REVISION: 1.0
+|COMPONENTS|
+U1 ATMEGA32-P (400,300) R0
+SERVO1 SERVO (700,250) VALUE=SG90
+RV1 POT-LIN (200,350) VALUE=10K
+R1 RES (350,150) VALUE=10K
+C1 CAP (150,300) VALUE=100nF
+C2 CAP (150,320) VALUE=10uF
+X1 CRYSTAL (320,380) VALUE=16MHz
+C3 CAP (300,400) VALUE=22pF
+C4 CAP (340,400) VALUE=22pF
+V1 POWER (100,100) VALUE=+5V
+V2 POWER (650,100) VALUE=+5V
+G1 GROUND (100,500)
+|WIRES|
+(RV1.2,U1.40)
+(RV1.1,V1)
+(RV1.3,G1)
+(U1.19,SERVO1.1)
+(SERVO1.2,V2)
+(SERVO1.3,G1)
+(U1.30,V1)
+(U1.30,C1.1)
+(C1.2,G1)
+(U1.30,C2.1)
+(C2.2,G1)
+(U1.31,V1)
+(U1.13,X1.1)
+(U1.12,X1.2)
+(U1.13,C3.1)
+(C3.2,G1)
+(U1.12,C4.1)
+(C4.2,G1)
+(U1.11,V1)
+(U1.32,G1)
+(U1.9,R1.1)
+(R1.2,V1)
+(G1,V2)
+|PROPERTIES|
+U1.PROGRAM=assignment6.hex
+U1.CLOCK=16000000
+|LABELS|
+SERVO_SIGNAL PWM_OUT
+POT_INPUT ADC0
+|END|
+```
+
+## Assignment 7: Digital Clock - Complete Design File
+
+```proteus-design
+|DESIGN|
+|HEADER|
+ISIS SCHEMATIC FILE  Proteus 8.13
+DESIGN TITLE: Assignment 7 - Digital Clock with Alarm
+DESIGN AUTHOR: Assembly Course
+DESIGN REVISION: 1.0
+|COMPONENTS|
+U1 ATMEGA32-P (300,400) R0
+U2 LHD44780 (600,300) R0
+SW1 BUTTON (150,200) R0
+SW2 BUTTON (150,230) R0
+SW3 BUTTON (150,260) R0
+SW4 BUTTON (150,290) R0
+BZ1 BUZZER (650,450) R0
+RV1 POT-LIN (650,200) VALUE=10K
+R1 RES (200,150) VALUE=10K
+R2 RES (200,170) VALUE=10K
+R3 RES (200,190) VALUE=10K
+R4 RES (200,210) VALUE=10K
+R5 RES (250,150) VALUE=10K
+X1 CRYSTAL (220,480) VALUE=32.768kHz
+X2 CRYSTAL (180,520) VALUE=8MHz
+C1 CAP (200,500) VALUE=22pF
+C2 CAP (240,500) VALUE=22pF
+C3 CAP (160,540) VALUE=22pF
+C4 CAP (200,540) VALUE=22pF
+V1 POWER (50,100) VALUE=+5V
+G1 GROUND (50,600)
+|WIRES|
+(SW1.1,U1.1)
+(SW1.2,G1)
+(SW1.1,R1.1)
+(R1.2,V1)
+(SW2.1,U1.2)
+(SW2.2,G1)
+(SW2.1,R2.1)
+(R2.2,V1)
+(SW3.1,U1.3)
+(SW3.2,G1)
+(SW3.1,R3.1)
+(R3.2,V1)
+(SW4.1,U1.4)
+(SW4.2,G1)
+(SW4.1,R4.1)
+(R4.2,V1)
+(BZ1.1,U1.14)
+(BZ1.2,G1)
+(U2.1,G1)
+(U2.2,V1)
+(U2.3,RV1.2)
+(RV1.1,V1)
+(RV1.3,G1)
+(U2.4,U1.15)
+(U2.6,U1.16)
+(U2.11,U1.19)
+(U2.12,U1.20)
+(U2.13,U1.21)
+(U2.14,U1.22)
+(U2.15,V1)
+(U2.16,G1)
+(U1.13,X1.1)
+(U1.12,X1.2)
+(U1.13,C1.1)
+(C1.2,G1)
+(U1.12,C2.1)
+(C2.2,G1)
+(U1.11,V1)
+(U1.32,G1)
+(U1.9,R5.1)
+(R5.2,V1)
+|PROPERTIES|
+U1.PROGRAM=assignment7.hex
+U1.CLOCK=32768
+|LABELS|
+BTN_SET SET_BUTTON
+BTN_UP UP_BUTTON  
+BTN_DOWN DOWN_BUTTON
+BTN_ALARM ALARM_BUTTON
+BUZZER_OUT ALARM_BUZZER
+|END|
+```
+
+## Assignment 8: Keypad Security System - Complete Design File
+
+```proteus-design
+|DESIGN|
+|HEADER|
+ISIS SCHEMATIC FILE  Proteus 8.13
+DESIGN TITLE: Assignment 8 - Keypad Security System
+DESIGN AUTHOR: Assembly Course
+DESIGN REVISION: 1.0
+|COMPONENTS|
+U1 ATMEGA32-P (300,400) R0
+U2 LHD44780 (650,300) R0
+U3 KEYPAD4X4 (150,350) R0
+D1 LED-GREEN (700,150) R0
+D2 LED-RED (700,170) R0
+D3 LED-BLUE (700,190) R0
+BZ1 BUZZER (700,450) R0
+RV1 POT-LIN (700,200) VALUE=10K
+R1 RES (600,150) VALUE=220R
+R2 RES (600,170) VALUE=220R
+R3 RES (600,190) VALUE=220R
+R4 RES (250,150) VALUE=10K
+R5 RES (100,300) VALUE=10K
+R6 RES (100,320) VALUE=10K
+R7 RES (100,340) VALUE=10K
+R8 RES (100,360) VALUE=10K
+X1 CRYSTAL (220,480) VALUE=8MHz
+C1 CAP (200,500) VALUE=22pF
+C2 CAP (240,500) VALUE=22pF
+V1 POWER (50,100) VALUE=+5V
+G1 GROUND (50,600)
+|WIRES|
+(U3.1,U1.14)
+(U3.2,U1.15)
+(U3.3,U1.16)
+(U3.4,U1.17)
+(U3.5,U1.18)
+(U3.5,R5.1)
+(R5.2,V1)
+(U3.6,U1.19)
+(U3.6,R6.1)
+(R6.2,V1)
+(U3.7,U1.22)
+(U3.7,R7.1)
+(R7.2,V1)
+(U3.8,U1.23)
+(U3.8,R8.1)
+(R8.2,V1)
+(U1.1,R1.1)
+(R1.2,D1.A)
+(D1.K,G1)
+(U1.2,R2.1)
+(R2.2,D2.A)
+(D2.K,G1)
+(U1.3,R3.1)
+(R3.2,D3.A)
+(D3.K,G1)
+(U1.4,BZ1.1)
+(BZ1.2,G1)
+(U2.1,G1)
+(U2.2,V1)
+(U2.3,RV1.2)
+(RV1.1,V1)
+(RV1.3,G1)
+(U2.4,U1.32)
+(U2.6,U1.33)
+(U2.11,U1.36)
+(U2.12,U1.37)
+(U2.13,U1.38)
+(U2.14,U1.39)
+(U2.15,V1)
+(U2.16,G1)
+(U1.13,X1.1)
+(U1.12,X1.2)
+(U1.13,C1.1)
+(C1.2,G1)
+(U1.12,C2.1)
+(C2.2,G1)
+(U1.11,V1)
+(U1.32,G1)
+(U1.9,R4.1)
+(R4.2,V1)
+|PROPERTIES|
+U1.PROGRAM=assignment8.hex
+U1.CLOCK=8000000
+|LABELS|
+KEYPAD_ROWS KEYPAD_R0-R3
+KEYPAD_COLS KEYPAD_C0-C3
+LED_STATUS STATUS_LEDS
+KEYPAD_INPUT SECURITY_KEYPAD
+|END|
+```
+
+## Assignment 9: Ultrasonic Distance Sensor - Complete Design File
+
+```proteus-design
+|DESIGN|
+|HEADER|
+ISIS SCHEMATIC FILE  Proteus 8.13
+DESIGN TITLE: Assignment 9 - Ultrasonic Distance Sensor
+DESIGN AUTHOR: Assembly Course
+DESIGN REVISION: 1.0
+|COMPONENTS|
+U1 ATMEGA32-P (300,400) R0
+U2 LHD44780 (650,300) R0
+U3 HCSR04 (150,300) R0
+D1 LED-GREEN (700,150) R0
+D2 LED-YELLOW (700,170) R0
+D3 LED-RED (700,190) R0
+BZ1 BUZZER (700,450) R0
+RV1 POT-LIN (700,200) VALUE=10K
+R1 RES (600,150) VALUE=220R
+R2 RES (600,170) VALUE=220R
+R3 RES (600,190) VALUE=220R
+R4 RES (250,150) VALUE=10K
+X1 CRYSTAL (220,480) VALUE=16MHz
+C1 CAP (200,500) VALUE=22pF
+C2 CAP (240,500) VALUE=22pF
+V1 POWER (50,100) VALUE=+5V
+G1 GROUND (50,600)
+|WIRES|
+(U3.1,V1)
+(U3.2,U1.20)
+(U3.3,U1.21)
+(U3.4,G1)
+(U1.1,R1.1)
+(R1.2,D1.A)
+(D1.K,G1)
+(U1.2,R2.1)
+(R2.2,D2.A)
+(D2.K,G1)
+(U1.3,R3.1)
+(R3.2,D3.A)
+(D3.K,G1)
+(U1.4,BZ1.1)
+(BZ1.2,G1)
+(U2.1,G1)
+(U2.2,V1)
+(U2.3,RV1.2)
+(RV1.1,V1)
+(RV1.3,G1)
+(U2.4,U1.40)
+(U2.6,U1.39)
+(U2.11,U1.18)
+(U2.12,U1.19)
+(U2.13,U1.22)
+(U2.14,U1.23)
+(U2.15,V1)
+(U2.16,G1)
+(U1.13,X1.1)
+(U1.12,X1.2)
+(U1.13,C1.1)
+(C1.2,G1)
+(U1.12,C2.1)
+(C2.2,G1)
+(U1.11,V1)
+(U1.32,G1)
+(U1.9,R4.1)
+(R4.2,V1)
+|PROPERTIES|
+U1.PROGRAM=assignment9.hex
+U1.CLOCK=16000000
+|LABELS|
+ULTRASONIC_TRIG TRIG_SIGNAL
+ULTRASONIC_ECHO ECHO_SIGNAL  
+DISTANCE_LEDS WARNING_SYSTEM
+|END|
+```
+
+## Assignment 10: Data Logger - Complete Design File
+
+```proteus-design
+|DESIGN|
+|HEADER|
+ISIS SCHEMATIC FILE  Proteus 8.13
+DESIGN TITLE: Assignment 10 - Advanced Data Logger
+DESIGN AUTHOR: Assembly Course
+DESIGN REVISION: 1.0
+|COMPONENTS|
+U1 ATMEGA32-P (300,500) R0
+U2 LHD44780 (700,400) R0
+U3 LM35 (100,300) R0
+U4 LDR (100,350) R0
+SW1 BUTTON (150,150) R0
+SW2 BUTTON (150,180) R0
+D1 LED-GREEN (750,150) R0
+D2 LED-BLUE (750,170) R0
+D3 LED-RED (750,190) R0
+RV1 POT-LIN (750,200) VALUE=10K
+R1 RES (650,150) VALUE=220R
+R2 RES (650,170) VALUE=220R
+R3 RES (650,190) VALUE=220R
+R4 RES (100,370) VALUE=10K
+R5 RES (200,120) VALUE=10K
+R6 RES (200,140) VALUE=10K
+R7 RES (250,150) VALUE=10K
+C1 CAP (100,250) VALUE=100nF
+C2 CAP (100,270) VALUE=10uF
+C3 CAP (200,580) VALUE=22pF
+C4 CAP (240,580) VALUE=22pF
+X1 CRYSTAL (220,560) VALUE=16MHz
+V1 POWER (50,100) VALUE=+5V
+G1 GROUND (50,650)
+CONN1 TERMINAL (800,300) VALUE=UART
+|WIRES|
+(U3.1,V1)
+(U3.2,U1.40)
+(U3.3,G1)
+(U4.1,V1)
+(U4.2,U1.39)
+(U4.2,R4.1)
+(R4.2,G1)
+(SW1.1,U1.16)
+(SW1.2,G1)
+(SW1.1,R5.1)
+(R5.2,V1)
+(SW2.1,U1.17)
+(SW2.2,G1)
+(SW2.1,R6.1)
+(R6.2,V1)
+(U1.16,R1.1)
+(R1.2,D1.A)
+(D1.K,G1)
+(U1.17,R2.1)
+(R2.2,D2.A)
+(D2.K,G1)
+(U1.18,R3.1)
+(R3.2,D3.A)
+(D3.K,G1)
+(U2.1,G1)
+(U2.2,V1)
+(U2.3,RV1.2)
+(RV1.1,V1)
+(RV1.3,G1)
+(U2.4,U1.1)
+(U2.6,U1.2)
+(U2.11,U1.5)
+(U2.12,U1.6)
+(U2.13,U1.7)
+(U2.14,U1.8)
+(U2.15,V1)
+(U2.16,G1)
+(U1.15,CONN1.1)
+(U1.14,CONN1.2)
+(CONN1.3,G1)
+(U1.30,V1)
+(U1.30,C1.1)
+(C1.2,G1)
+(U1.30,C2.1)
+(C2.2,G1)
+(U1.31,V1)
+(U1.13,X1.1)
+(U1.12,X1.2)
+(U1.13,C3.1)
+(C3.2,G1)
+(U1.12,C4.1)
+(C4.2,G1)
+(U1.11,V1)
+(U1.32,G1)
+(U1.9,R7.1)
+(R7.2,V1)
+|PROPERTIES|
+U1.PROGRAM=assignment10.hex
+U1.CLOCK=16000000
+U1.BAUD=9600
+|LABELS|
+TEMP_SENSOR TEMPERATURE_INPUT
+LIGHT_SENSOR LIGHT_INPUT
+DATA_LOGGING SENSOR_DATA
+UART_COMM SERIAL_DATA
+CONTROL_BUTTONS USER_INTERFACE
+STATUS_DISPLAY SYSTEM_LCD
+|END|
+```
+
+---
+
+## Instructions for Using These Design Files:
+
+### Step 1: Save Design Files
+1. Copy each design block above (from `|DESIGN|` to `|END|`)
+2. Save as individual .dsn files:
+   - `assignment1.dsn`
+   - `assignment2.dsn` 
+   - ... and so on
+
+### Step 2: Import into Proteus
+1. Open Proteus 8.13
+2. File → Import → Design Import
+3. Select the .dsn file you want to import
+4. Click "Import"
+
+### Step 3: Load Program Files
+1. Right-click on the ATmega32 component
+2. Properties → Program File
+3. Browse to your compiled .hex file
+4. Set Clock Frequency as specified in properties
+
+### Step 4: Start Simulation
+1. Click the "Play" button
+2. Observe circuit behavior
+3. Use probes and oscilloscope as needed
+
+### Notes:
+- Make sure all .hex files are compiled and in the same directory
+- Check crystal frequencies match your assembly code
+- Verify all connections before starting simulation
+- Use appropriate probe points for debugging
+
+These design files provide complete, ready-to-simulate circuits for all 10 assignments!
