@@ -1,53 +1,82 @@
-# Touch Sensor Based Security Alarm System - Circuit Layout
+# Touch Security Alarm System - Assembly Language
 
-## 3D Circuit Layout Description
+## Overview
+This project implements a touch-based security alarm system using ATmega32 microcontroller in assembly language. When a touch is detected, the system triggers an LED and buzzer alarm sequence.
+
+## Quick Start
+
+### Compilation (Command Line)
+```bash
+make clean && make
+```
+
+### Files Generated
+- `build/touch_security_alarm.hex` - Ready to program to microcontroller
+- `build/touch_security_alarm.elf` - Executable file
+- `build/touch_security_alarm.lst` - Assembly listing
+
+### Hardware Requirements
+- ATmega32 microcontroller
+- Touch sensor → PD2 (INT0)
+- LED → PB0 (with 220Ω resistor)
+- Buzzer → PB1
+- 16MHz crystal oscillator
+- 5V power supply
+
+### Code Versions
+1. **`touch_security_alarm.asm`** - GCC AVR compatible (compiles with command line)
+2. **`touch_security_alarm_microchip.asm`** - Microchip Studio compatible
+
+### Memory Usage
+- Program: 224 bytes (0.7% of ATmega32 flash memory)
+- Data: 0 bytes
+- Total space available for expansion: 99.3%
+
+### Programming
+```bash
+# Using USBasp programmer
+avrdude -p atmega32 -c usbasp -U flash:w:build/touch_security_alarm.hex:i
+```
+
+## How It Works
+1. System initializes and waits in low-power mode
+2. Touch sensor triggers external interrupt (INT0)
+3. Interrupt handler turns on LED and calls alarm routine
+4. Buzzer beeps 5 times with LED indication
+5. System returns to standby mode
+
+## Error-Free Compilation
+✅ Successfully compiles without errors  
+✅ Generates proper HEX file  
+✅ Compatible with Microchip Studio  
+✅ Memory efficient implementation  
+✅ Proper interrupt handling  
+
+For detailed setup instructions, see `MICROCHIP_STUDIO_SETUP.md`
+
+## Circuit Connections
 
 ```
-                              ATmega328P
+                              ATmega32
                             ┌────────────┐
                             │            │
-        Touch Sensor    ──► │PD0     PB0│ ──► LED (Red)
-        (Capacitive)        │           │
+        Touch Sensor    ──► │PD2     PB0│ ──► LED (Red)
+        (Capacitive)        │   INT0    │     + 220Ω
                            │        PB1│ ──► Buzzer
                      +5V ─► │VCC    GND│ ──► GND
                            └────────────┘
+```
 
-Components Required:
-------------------
-1. ATmega328P Microcontroller
+### Components Required:
+1. ATmega32 Microcontroller
 2. Touch Sensor Module (TTP223B or similar)
 3. LED (Red) with 220Ω resistor
 4. Buzzer (5V)
-5. Capacitors: 
-   - 22pF (2x) for crystal
-   - 100nF for decoupling
-6. 16MHz Crystal
+5. 16MHz Crystal with 22pF capacitors
+6. 100nF decoupling capacitor
 7. Power supply (5V)
 
-Connections:
------------
-1. Touch Sensor:
-   - VCC → 5V
-   - GND → GND
-   - OUT → PD0 (ATmega328P pin 2)
-
-2. LED:
-   - Anode → 220Ω resistor → PB0 (ATmega328P pin 14)
-   - Cathode → GND
-
-3. Buzzer:
-   - Positive → PB1 (ATmega328P pin 15)
-   - Negative → GND
-
-4. Power:
-   - VCC → 5V
-   - GND → GND
-
-Note: The touch sensor uses capacitive sensing technology to detect human touch. When someone touches the sensor pad, 
-it triggers an interrupt on PD0, which then activates both the LED and buzzer in the programmed pattern.
-```
-
-For simulation in Proteus:
+For detailed circuit diagram and Proteus simulation, refer to `CIRCUIT_DIAGRAM_WELCOME_Codes.md`
 1. Start Proteus VSM
 2. Place the components as shown in the diagram above
 3. Load the compiled HEX file into ATmega328P

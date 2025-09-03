@@ -1,91 +1,98 @@
 ;===============================================================================
-; Touch Sensor Based Security Alarm System
+; Touch Sensor Based Security Alarm System  
 ; Created: September 3, 2025
 ;
 ; Hardware Requirements:
 ; - ATmega32 microcontroller
 ; - Touch sensor (connected to PORTD.2 - INT0)
-; - LED (connected to PORTA.0)
-; - Buzzer (connected to PORTA.1)
+; - LED (connected to PORTB.0)
+; - Buzzer (connected to PORTB.1)
 ;===============================================================================
 
-.include "m32def.inc"     ; Include ATmega32 definitions
+#include <avr/io.h>
 
-; Register definitions
-.def temp = r16           ; Temporary register
-.def touch_state = r17    ; Touch sensor state
-.def delay_count1 = r18   ; Delay counter 1
-.def delay_count2 = r19   ; Delay counter 2
+.section .text
+.global main
 
-; Reset and Interrupt vectors
-.cseg
-.org 0x0000              ; Reset vector
-    rjmp RESET           ; Jump to reset handler
-.org 0x0002              ; External Interrupt 0 vector
-    rjmp EXT_INT0        ; Jump to external interrupt handler
+; Reset vector
+.org 0x0000
+    rjmp main           ; Jump to main function
 
-RESET:
+; External Interrupt 0 vector (INT0)
+.org 0x0002  
+    rjmp ext_int0       ; Jump to interrupt handler
+
+main:
     ; Initialize Stack Pointer
-    ldi temp, HIGH(RAMEND)
-    out SPH, temp
-    ldi temp, LOW(RAMEND)
-    out SPL, temp
+    ldi r16, hi8(RAMEND)
+    sts SPH, r16         ; Use sts for extended I/O
+    ldi r16, lo8(RAMEND)
+    sts SPL, r16         ; Use sts for extended I/O
 
     ; Configure PORTB (LED and Buzzer outputs)
-    ldi temp, (1<<PB0)|(1<<PB1)    ; Set PB0 (LED) and PB1 (Buzzer) as outputs
-    out DDRB, temp
+    ldi r16, 0x03        ; Set PB0 (LED) and PB1 (Buzzer) as outputs
+    sts DDRB, r16        ; Use sts for extended I/O
     
     ; Configure PORTD (Touch sensor input)
-    ldi temp, 0x00       ; Set PORTD.0 as input
-    out DDRD, temp
-    ldi temp, (1<<PD0)   ; Enable pull-up on PD0
-    out PORTD, temp
+    ldi r16, 0x00        ; Set PORTD.2 as input
+    sts DDRD, r16        ; Use sts for extended I/O  
+    ldi r16, 0x04        ; Enable pull-up on PD2 (INT0)
+    sts PORTD, r16       ; Use sts for extended I/O
 
-    ; Configure External Interrupt 0
-    ldi temp, (1<<ISC01)|(1<<ISC00) ; Configure INT0 for rising edge
-    sts EICRA, temp
-    ldi temp, (1<<INT0)  ; Enable INT0
-    out EIMSK, temp
+    ; Configure External Interrupt 0 (for ATmega32)
+    ldi r16, 0x03        ; Configure INT0 for rising edge (ISC01|ISC00)
+    sts MCUCR, r16       ; Use sts for extended I/O
+    ldi r16, 0x40        ; Enable INT0
+    sts GICR, r16        ; Use sts for extended I/O
 
     sei                  ; Enable global interrupts
 
-MAIN_LOOP:
-    rjmp MAIN_LOOP       ; Infinite loop
+main_loop:
+    rjmp main_loop      ; Infinite loop
 
-EXT_INT0:
+; External Interrupt 0 Handler
+ext_int0:
     ; Touch detected - Activate alarm
-    sbi PORTB, 0         ; Turn on LED
-    rcall ALARM_SOUND    ; Generate alarm sound
-    reti                 ; Return from interrupt
+    ldi r16, 0x01       ; Load bit pattern for PB0
+    sts PORTB, r16      ; Turn on LED
+    rcall alarm_sound   ; Generate alarm sound
+    reti                ; Return from interrupt
 
-ALARM_SOUND:
-    push temp            ; Save temp register
-    ldi temp, 5          ; Number of beeps
+alarm_sound:
+    push r16            ; Save temp register
+    ldi r16, 5          ; Number of beeps
 
-BEEP_LOOP:
-    sbi PORTB, 1         ; Turn on buzzer
-    rcall DELAY          ; Delay
-    cbi PORTB, 1         ; Turn off buzzer
-    rcall DELAY          ; Delay
-    dec temp
-    brne BEEP_LOOP
+beep_loop:
+    ; Turn on buzzer (PB1)
+    ldi r17, 0x03       ; LED + Buzzer on
+    sts PORTB, r17
+    rcall delay_routine ; Delay
     
-    pop temp             ; Restore temp register
+    ; Turn off buzzer, keep LED on
+    ldi r17, 0x01       ; LED on, Buzzer off  
+    sts PORTB, r17
+    rcall delay_routine ; Delay
+    
+    dec r16
+    brne beep_loop
+    
+    pop r16             ; Restore temp register
     ret
 
-DELAY:                   ; Delay subroutine
-    push delay_count1
-    push delay_count2
+delay_routine:          ; Delay subroutine
+    push r18
+    push r19
     
-    ldi delay_count1, 255
-OUTER_LOOP:
-    ldi delay_count2, 255
-INNER_LOOP:
-    dec delay_count2
-    brne INNER_LOOP
-    dec delay_count1
-    brne OUTER_LOOP
+    ldi r18, 200        ; Outer loop counter
+outer_loop:
+    ldi r19, 200        ; Inner loop counter
+inner_loop:
+    nop                 ; No operation
+    dec r19
+    brne inner_loop
+    dec r18
+    brne outer_loop
     
-    pop delay_count2
-    pop delay_count1
+    pop r19
+    pop r18
     ret
